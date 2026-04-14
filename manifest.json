@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "name": "ScreenTutorial",
+  "version": "1.0.0",
+  "description": "Génère des tutoriels pas-à-pas à partir de vos sessions de navigation",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "<all_urls>",
+    "webNavigation"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon.svg",
+      "96": "icons/icon.svg"
+    },
+    "default_title": "ScreenTutorial"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  }
+}

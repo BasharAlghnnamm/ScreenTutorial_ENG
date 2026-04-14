@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScreenTutorial — Éditeur</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <img src="../icons/icon.svg" alt="" width="28" height="28">
+      <input type="text" id="tutorial-title" class="title-input" placeholder="Titre du tutoriel">
+    </div>
+    <div class="header-right">
+      <span id="step-info" class="step-info"></span>
+      <button id="btn-export-md" class="btn btn-outline">Exporter .md</button>
+      <button id="btn-export-html" class="btn btn-outline">Exporter .html</button>
+      <button id="btn-export-pdf" class="btn btn-primary">Exporter .pdf</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="steps-list" class="steps-list"></div>
+    <div id="empty-state" class="empty-state" hidden>
+      <p>Aucune étape enregistrée.</p>
+    </div>
+  </main>
+
+  <!-- Full-size screenshot modal -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="Capture d'écran">
+      <button id="modal-close" class="modal-close">&times;</button>
+    </div>
+  </div>
+
+  <script src="editor.js"></script>
+</body>
+</html>

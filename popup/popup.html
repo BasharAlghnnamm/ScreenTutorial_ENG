@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="../icons/icon.svg" alt="" width="24" height="24">
+        <span>ScreenTutorial</span>
+      </div>
+    </header>
+
+    <!-- Idle -->
+    <div id="view-idle">
+      <div class="field">
+        <label for="title">Titre du tutoriel</label>
+        <input type="text" id="title" placeholder="Ex : Comment créer un compte">
+      </div>
+      <button id="btn-start" class="btn btn-primary btn-block">
+        Démarrer l'enregistrement
+      </button>
+    </div>
+
+    <!-- Recording -->
+    <div id="view-recording" hidden>
+      <div class="status recording">
+        <span class="rec-dot"></span>
+        Enregistrement en cours
+      </div>
+      <div class="step-count"><span id="step-count">0</span> étape(s) capturée(s)</div>
+      <button id="btn-stop" class="btn btn-danger btn-block">
+        Arrêter l'enregistrement
+      </button>
+    </div>
+
+    <!-- Done -->
+    <div id="view-done" hidden>
+      <div class="status done">Enregistrement terminé</div>
+      <div class="step-count"><span id="step-count-done">0</span> étape(s) capturée(s)</div>
+      <button id="btn-editor" class="btn btn-primary btn-block">
+        Modifier et exporter
+      </button>
+      <button id="btn-new" class="btn btn-outline btn-block">
+        Nouvel enregistrement
+      </button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
