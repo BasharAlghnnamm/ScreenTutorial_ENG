@@ -237,10 +237,10 @@ btnExportPdf.addEventListener('click', function () {
     .replace('{{DATE}}', new Date().toLocaleDateString('en-US'))
     .replace('{{STEPS}}', stepsHtml);
 
-  var w = window.open('', '_blank');
-  w.document.write(html);
-  w.document.close();
-  // Wait for images to load before triggering print
+  var blob = new Blob([html], { type: 'text/html' });
+  var blobUrl = URL.createObjectURL(blob);
+  var w = window.open(blobUrl, '_blank');
+  setTimeout(function () { URL.revokeObjectURL(blobUrl); }, 30000);
   w.onload = function () { w.print(); };
 });
 
