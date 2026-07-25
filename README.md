@@ -1,4 +1,4 @@
-# ScreenTutorial (English Ver) — v2.0
+# ScreenTutorial (ENG) — v2.0
 
 Firefox extension that generates step-by-step tutorials from your browsing sessions. Click, navigate, fill out forms — every significant action is captured with an automatic screenshot.
 
