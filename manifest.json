@@ -33,7 +33,7 @@
     "gecko": {
       "id": "screentutorial-eng@example.com",
       "data_collection_permissions": {
-        "isExempt": true
+        "required": ["none"]
       }
     }
   },
