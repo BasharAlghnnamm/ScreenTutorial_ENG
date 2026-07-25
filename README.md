@@ -28,7 +28,7 @@ Firefox extension that generates step-by-step tutorials from your browsing sessi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/BasharAlghnnamm/ScreenTutorial.git
+   git clone https://github.com/BasharAlghnnamm/ScreenTutorial_ENG.git
    ```
 2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
 3. Click **"Load Temporary Add-on..."**
