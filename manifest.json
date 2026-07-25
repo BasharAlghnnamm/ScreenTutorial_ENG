@@ -33,9 +33,7 @@
     "gecko": {
       "id": "screentutorial-eng@example.com",
       "data_collection_permissions": {
-        "isExempt": true,
-        "required": [],
-        "description": "This extension collects browsing data (URLs, screenshots) locally during recording sessions. No data is sent to external servers."
+        "isExempt": true
       }
     }
   },
