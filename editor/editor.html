@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScreenTutorial — Éditeur</title>
+  <title>ScreenTutorial — Editor</title>
   <link rel="stylesheet" href="editor.css">
 </head>
 <body>
@@ -11,20 +11,20 @@
   <header>
     <div class="header-left">
       <img src="../icons/icon.svg" alt="" width="28" height="28">
-      <input type="text" id="tutorial-title" class="title-input" placeholder="Titre du tutoriel">
+      <input type="text" id="tutorial-title" class="title-input" placeholder="Tutorial title">
     </div>
     <div class="header-right">
       <span id="step-info" class="step-info"></span>
-      <button id="btn-export-md" class="btn btn-outline">Exporter .md</button>
-      <button id="btn-export-html" class="btn btn-outline">Exporter .html</button>
-      <button id="btn-export-pdf" class="btn btn-primary">Exporter .pdf</button>
+      <button id="btn-export-md" class="btn btn-outline">Export .md</button>
+      <button id="btn-export-html" class="btn btn-outline">Export .html</button>
+      <button id="btn-export-pdf" class="btn btn-primary">Export .pdf</button>
     </div>
   </header>
 
   <main>
     <div id="steps-list" class="steps-list"></div>
     <div id="empty-state" class="empty-state" hidden>
-      <p>Aucune étape enregistrée.</p>
+      <p>No steps recorded.</p>
     </div>
   </main>
 
@@ -32,7 +32,7 @@
   <div id="modal" class="modal" hidden>
     <div class="modal-backdrop"></div>
     <div class="modal-content">
-      <img id="modal-img" src="" alt="Capture d'écran">
+      <img id="modal-img" src="" alt="Screenshot">
       <button id="modal-close" class="modal-close">&times;</button>
     </div>
   </div>

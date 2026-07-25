@@ -3,6 +3,7 @@
 
 var steps = [];
 var title = '';
+var outputFolder = 'ScreenTutorial';
 
 var titleInput   = document.getElementById('tutorial-title');
 var stepsList    = document.getElementById('steps-list');
@@ -17,9 +18,15 @@ var modalClose   = document.getElementById('modal-close');
 
 // ── Load data ───────────────────────────────────────────────────────────────
 
-browser.runtime.sendMessage({ type: 'GET_STATE' }).then(function (state) {
+Promise.all([
+  browser.runtime.sendMessage({ type: 'GET_STATE' }),
+  browser.storage.local.get(['outputFolder'])
+]).then(function (results) {
+  var state = results[0];
+  var data  = results[1];
   title = state.title || '';
   steps = state.steps || [];
+  outputFolder = data.outputFolder || 'ScreenTutorial';
   titleInput.value = title;
   render();
 });
@@ -34,7 +41,7 @@ titleInput.addEventListener('input', function () {
 // ── Render ───────────────────────────────────────────────────────────────────
 
 function render() {
-  stepInfo.textContent = steps.length + ' \u00e9tape' + (steps.length > 1 ? 's' : '');
+  stepInfo.textContent = steps.length + ' step' + (steps.length !== 1 ? 's' : '');
   emptyState.hidden = steps.length > 0;
   stepsList.innerHTML = '';
   steps.forEach(function (step, i) {
@@ -75,7 +82,7 @@ function buildCard(step, index) {
   var del = document.createElement('button');
   del.className = 'btn-delete';
   del.innerHTML = '&times;';
-  del.title = 'Supprimer cette \u00e9tape';
+  del.title = 'Delete this step';
   del.addEventListener('click', function () {
     steps = steps.filter(function (s) { return s.id !== step.id; });
     browser.runtime.sendMessage({ type: 'DELETE_STEP', stepId: step.id });
@@ -94,7 +101,7 @@ function buildCard(step, index) {
     ssDiv.className = 'step-screenshot';
     var img = document.createElement('img');
     img.src = step.screenshot;
-    img.alt = '\u00c9tape ' + (index + 1);
+    img.alt = 'Step ' + (index + 1);
     img.loading = 'lazy';
     img.draggable = false;
     img.addEventListener('click', function () { openModal(step.screenshot); });
@@ -103,7 +110,7 @@ function buildCard(step, index) {
   } else {
     var noSs = document.createElement('div');
     noSs.className = 'step-no-screenshot';
-    noSs.textContent = 'Aucune capture d\u2019\u00e9cran';
+    noSs.textContent = 'No screenshot';
     card.appendChild(noSs);
   }
 
@@ -172,13 +179,13 @@ document.addEventListener('keydown', function (e) {
 btnExportMd.addEventListener('click', function () {
   var md = '# ' + title + '\n\n';
   steps.forEach(function (step, i) {
-    md += '## \u00c9tape ' + (i + 1) + ' : ' + step.description + '\n\n';
+    md += '## Step ' + (i + 1) + ': ' + step.description + '\n\n';
     if (step.screenshot) {
-      md += '![\u00c9tape ' + (i + 1) + '](' + step.screenshot + ')\n\n';
+      md += '![Step ' + (i + 1) + '](' + step.screenshot + ')\n\n';
     }
   });
-  md += '\n---\n*G\u00e9n\u00e9r\u00e9 avec ScreenTutorial*\n';
-  download(slugify(title) + '.md', md, 'text/markdown');
+  md += '\n---\n*Generated with ScreenTutorial*\n';
+  saveFile(slugify(title) + '.md', md, 'text/markdown');
 });
 
 // ── Export: Standalone HTML ──────────────────────────────────────────────────
@@ -193,7 +200,7 @@ btnExportHtml.addEventListener('click', function () {
           '<div class="step-description">' + esc(step.description) + '</div>' +
         '</div>' +
         (step.screenshot
-          ? '<img src="' + step.screenshot + '" alt="\u00c9tape ' + (i + 1) + '">'
+          ? '<img src="' + step.screenshot + '" alt="Step ' + (i + 1) + '">'
           : '') +
       '</div>';
   });
@@ -201,10 +208,10 @@ btnExportHtml.addEventListener('click', function () {
   var html = HTML_TEMPLATE
     .replace(/\{\{TITLE\}\}/g, esc(title))
     .replace('{{STEP_COUNT}}', steps.length)
-    .replace('{{DATE}}', new Date().toLocaleDateString('fr-FR'))
+    .replace('{{DATE}}', new Date().toLocaleDateString('en-US'))
     .replace('{{STEPS}}', stepsHtml);
 
-  download(slugify(title) + '.html', html, 'text/html');
+  saveFile(slugify(title) + '.html', html, 'text/html');
 });
 
 // ── Export: PDF (via print) ──────────────────────────────────────────────────
@@ -219,7 +226,7 @@ btnExportPdf.addEventListener('click', function () {
           '<div class="step-description">' + esc(step.description) + '</div>' +
         '</div>' +
         (step.screenshot
-          ? '<img src="' + step.screenshot + '" alt="\u00c9tape ' + (i + 1) + '">'
+          ? '<img src="' + step.screenshot + '" alt="Step ' + (i + 1) + '">'
           : '') +
       '</div>';
   });
@@ -227,7 +234,7 @@ btnExportPdf.addEventListener('click', function () {
   var html = HTML_TEMPLATE
     .replace(/\{\{TITLE\}\}/g, esc(title))
     .replace('{{STEP_COUNT}}', steps.length)
-    .replace('{{DATE}}', new Date().toLocaleDateString('fr-FR'))
+    .replace('{{DATE}}', new Date().toLocaleDateString('en-US'))
     .replace('{{STEPS}}', stepsHtml);
 
   var w = window.open('', '_blank');
@@ -239,14 +246,26 @@ btnExportPdf.addEventListener('click', function () {
 
 // ── Utilities ────────────────────────────────────────────────────────────────
 
-function download(filename, content, type) {
+function saveFile(filename, content, type) {
+  var folder = outputFolder.replace(/[/\\]$/, '');
   var blob = new Blob([content], { type: type });
   var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.click();
-  setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+  browser.downloads.download({
+    url: url,
+    filename: folder + '/' + filename,
+    conflictAction: 'uniquify',
+    saveAs: false
+  }).then(function () {
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  }).catch(function () {
+    // Fallback: trigger browser save dialog
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  });
 }
 
 function slugify(text) {
@@ -255,7 +274,7 @@ function slugify(text) {
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
-    || 'tutoriel';
+    || 'tutorial';
 }
 
 function esc(text) {
@@ -268,7 +287,7 @@ function esc(text) {
 
 var HTML_TEMPLATE =
   '<!DOCTYPE html>\n' +
-  '<html lang="fr">\n' +
+  '<html lang="en">\n' +
   '<head>\n' +
   '<meta charset="UTF-8">\n' +
   '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
@@ -295,8 +314,8 @@ var HTML_TEMPLATE =
   '</head>\n' +
   '<body>\n' +
   '<h1>{{TITLE}}</h1>\n' +
-  '<div class="meta">{{STEP_COUNT}} \u00e9tapes \u2014 G\u00e9n\u00e9r\u00e9 le {{DATE}}</div>\n' +
+  '<div class="meta">{{STEP_COUNT}} steps \u2014 Generated on {{DATE}}</div>\n' +
   '{{STEPS}}\n' +
-  '<footer>G\u00e9n\u00e9r\u00e9 avec ScreenTutorial</footer>\n' +
+  '<footer>Generated with ScreenTutorial</footer>\n' +
   '</body>\n' +
   '</html>';

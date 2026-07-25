@@ -10,6 +10,10 @@ const btnEditor     = document.getElementById('btn-editor');
 const btnNew        = document.getElementById('btn-new');
 const stepCount     = document.getElementById('step-count');
 const stepCountDone = document.getElementById('step-count-done');
+const btnSettings   = document.getElementById('btn-settings');
+const settingsPanel = document.getElementById('settings-panel');
+const folderInput   = document.getElementById('folder-name');
+const folderPreview = document.getElementById('folder-preview');
 
 let countInterval = null;
 
@@ -21,7 +25,33 @@ function showView(name) {
   viewDone.hidden      = name !== 'done';
 }
 
+// ── Settings panel ──────────────────────────────────────────────────────────
+
+btnSettings.addEventListener('click', function () {
+  var isOpen = !settingsPanel.hidden;
+  settingsPanel.hidden = isOpen;
+  btnSettings.classList.toggle('active', !isOpen);
+});
+
+folderInput.addEventListener('input', function () {
+  var name = folderInput.value.trim() || 'ScreenTutorial';
+  folderPreview.textContent = name;
+  browser.storage.local.set({ outputFolder: name });
+});
+
+// ── Load settings ───────────────────────────────────────────────────────────
+
+function loadSettings() {
+  browser.storage.local.get(['outputFolder']).then(function (data) {
+    var folder = data.outputFolder || 'ScreenTutorial';
+    folderInput.value = folder;
+    folderPreview.textContent = folder;
+  });
+}
+
 // ── Init ────────────────────────────────────────────────────────────────────
+
+loadSettings();
 
 browser.runtime.sendMessage({ type: 'GET_STATUS' }).then(function (s) {
   if (s.recording) {

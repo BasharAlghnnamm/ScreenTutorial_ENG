@@ -89,22 +89,22 @@
       || (i.text.length <= 60 ? i.text : i.text.slice(0, 57) + '\u2026') || '';
 
     if (action === 'click') {
-      if (i.tag === 'a') return 'Cliquer sur le lien \u00ab ' + (id || 'lien') + ' \u00bb';
+      if (i.tag === 'a') return 'Click the link "' + (id || 'link') + '"';
       if (i.tag === 'button' || i.type === 'submit' || i.type === 'button')
-        return 'Cliquer sur le bouton \u00ab ' + (id || 'bouton') + ' \u00bb';
+        return 'Click the button "' + (id || 'button') + '"';
       if (i.type === 'checkbox' || i.type === 'radio')
-        return 'Cocher \u00ab ' + (id || i.type) + ' \u00bb';
-      return id ? 'Cliquer sur \u00ab ' + id + ' \u00bb' : 'Cliquer sur l\u2019\u00e9l\u00e9ment ' + i.tag;
+        return 'Check "' + (id || i.type) + '"';
+      return id ? 'Click "' + id + '"' : 'Click the ' + i.tag + ' element';
     }
     if (action === 'input') {
-      const f = i.label || i.placeholder || i.ariaLabel || i.title || 'champ';
-      return 'Saisir du texte dans \u00ab ' + f + ' \u00bb';
+      const f = i.label || i.placeholder || i.ariaLabel || i.title || 'field';
+      return 'Type text in "' + f + '"';
     }
     if (action === 'select') {
-      const f = i.label || i.ariaLabel || i.title || 'liste';
-      return 'S\u00e9lectionner une option dans \u00ab ' + f + ' \u00bb';
+      const f = i.label || i.ariaLabel || i.title || 'dropdown';
+      return 'Select an option in "' + f + '"';
     }
-    return id ? 'Action sur \u00ab ' + id + ' \u00bb' : 'Action sur ' + i.tag;
+    return id ? 'Action on "' + id + '"' : 'Action on ' + i.tag;
   }
 
   // ── Highlight clicked element ─────────────────────────────────────────────

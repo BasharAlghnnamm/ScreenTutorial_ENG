@@ -1,52 +1,57 @@
 # ScreenTutorial
 
-Extension Firefox qui génère des tutoriels pas-à-pas à partir de vos sessions de navigation. Cliquez, naviguez, remplissez des formulaires — chaque action significative est capturée avec une capture d'écran automatique.
+Firefox extension that generates step-by-step tutorials from your browsing sessions. Click, navigate, fill out forms — every significant action is captured with an automatic screenshot.
 
-## Fonctionnalités
+## Features
 
-- **Enregistrement automatique** des clics, saisies et navigations
-- **Capture d'écran** à chaque action significative
-- **Indicateur visuel** (badge REC) pendant l'enregistrement
-- **Éditeur complet** : renommer les étapes, supprimer, réordonner par drag & drop
-- **Export Markdown** (.md) avec screenshots en base64
-- **Export HTML** autonome (fichier unique, ouvrable dans n'importe quel navigateur)
-- **Export PDF** via la boîte de dialogue d'impression du navigateur
+- **Automatic recording** of clicks, text input, and navigation
+- **Screenshot capture** at each significant action
+- **Visual indicator** (REC badge) while recording
+- **Full editor**: rename steps, delete, reorder via drag & drop
+- **Markdown export** (.md) with base64 screenshots
+- **Standalone HTML export** (single file, openable in any browser)
+- **PDF export** via the browser's print dialog
+- **Configurable output folder** (saves to `Downloads/ScreenTutorial/` by default)
 
 ## Installation
 
-### Depuis les sources (développement)
+### From source (development)
 
-1. Cloner le dépôt :
+1. Clone the repository:
    ```bash
-   git clone https://github.com/VOTRE_USER/ScreenTutorial.git
+   git clone https://github.com/YOUR_USER/ScreenTutorial.git
    ```
-2. Ouvrir Firefox et aller à `about:debugging#/runtime/this-firefox`
-3. Cliquer **"Charger un module temporaire..."**
-4. Sélectionner le fichier `manifest.json` du dépôt
+2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
+3. Click **"Load Temporary Add-on..."**
+4. Select the `manifest.json` file from the repository
 
-## Utilisation
+## Usage
 
-1. Cliquer sur l'icône **ScreenTutorial** dans la barre d'outils
-2. Saisir un **titre** pour le tutoriel
-3. Cliquer **"Démarrer l'enregistrement"**
-4. Naviguer normalement sur le site web cible
-5. Cliquer à nouveau sur l'icône puis **"Arrêter l'enregistrement"**
-6. Cliquer **"Modifier et exporter"** pour ouvrir l'éditeur
-7. Éditer les descriptions, supprimer les étapes inutiles, réordonner
-8. Exporter en **.md**, **.html** ou **.pdf**
+1. Click the **ScreenTutorial** icon in the toolbar
+2. Enter a **title** for the tutorial
+3. Click **"Start Recording"**
+4. Browse normally on the target website
+5. Click the icon again and **"Stop Recording"**
+6. Click **"Edit & Export"** to open the editor
+7. Edit descriptions, delete unwanted steps, reorder
+8. Export as **.md**, **.html**, or **.pdf**
 
-## Structure du projet
+### Output Folder
+
+Exported files are saved to `Downloads/ScreenTutorial/` by default. You can change this in the popup settings (gear icon ⚙).
+
+## Project Structure
 
 ```
 ScreenTutorial/
-├── manifest.json       # Manifest Firefox (V2)
-├── background.js       # Gestion d'état, screenshots, navigation
-├── content.js          # Détection des interactions utilisateur
-├── popup/              # Popup de contrôle (start/stop)
+├── manifest.json       # Firefox Manifest V2
+├── background.js       # State management, screenshots, navigation tracking
+├── content.js          # User interaction detection
+├── popup/              # Control popup (start/stop/settings)
 │   ├── popup.html
 │   ├── popup.css
 │   └── popup.js
-├── editor/             # Éditeur pleine page (review & export)
+├── editor/             # Full-page editor (review & export)
 │   ├── editor.html
 │   ├── editor.css
 │   └── editor.js
@@ -54,6 +59,6 @@ ScreenTutorial/
     └── icon.svg
 ```
 
-## Licence
+## License
 
 MIT

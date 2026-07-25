@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="popup.css">
@@ -11,16 +11,26 @@
         <img src="../icons/icon.svg" alt="" width="24" height="24">
         <span>ScreenTutorial</span>
       </div>
+      <button id="btn-settings" class="btn-icon" title="Settings">&#9881;</button>
     </header>
+
+    <!-- Settings panel -->
+    <div id="settings-panel" class="settings-panel" hidden>
+      <div class="field">
+        <label for="folder-name">Output Folder</label>
+        <input type="text" id="folder-name" placeholder="ScreenTutorial">
+        <div class="field-hint">Files will be saved to Downloads/<strong id="folder-preview">ScreenTutorial</strong>/</div>
+      </div>
+    </div>
 
     <!-- Idle -->
     <div id="view-idle">
       <div class="field">
-        <label for="title">Titre du tutoriel</label>
-        <input type="text" id="title" placeholder="Ex : Comment créer un compte">
+        <label for="title">Tutorial Title</label>
+        <input type="text" id="title" placeholder="e.g. How to create an account">
       </div>
       <button id="btn-start" class="btn btn-primary btn-block">
-        Démarrer l'enregistrement
+        Start Recording
       </button>
     </div>
 
@@ -28,23 +38,23 @@
     <div id="view-recording" hidden>
       <div class="status recording">
         <span class="rec-dot"></span>
-        Enregistrement en cours
+        Recording in progress
       </div>
-      <div class="step-count"><span id="step-count">0</span> étape(s) capturée(s)</div>
+      <div class="step-count"><span id="step-count">0</span> step(s) captured</div>
       <button id="btn-stop" class="btn btn-danger btn-block">
-        Arrêter l'enregistrement
+        Stop Recording
       </button>
     </div>
 
     <!-- Done -->
     <div id="view-done" hidden>
-      <div class="status done">Enregistrement terminé</div>
-      <div class="step-count"><span id="step-count-done">0</span> étape(s) capturée(s)</div>
+      <div class="status done">Recording complete</div>
+      <div class="step-count"><span id="step-count-done">0</span> step(s) captured</div>
       <button id="btn-editor" class="btn btn-primary btn-block">
-        Modifier et exporter
+        Edit &amp; Export
       </button>
       <button id="btn-new" class="btn btn-outline btn-block">
-        Nouvel enregistrement
+        New Recording
       </button>
     </div>
   </div>

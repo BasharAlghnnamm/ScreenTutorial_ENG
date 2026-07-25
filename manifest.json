@@ -1,13 +1,15 @@
 {
   "manifest_version": 2,
   "name": "ScreenTutorial",
-  "version": "1.0.0",
-  "description": "Génère des tutoriels pas-à-pas à partir de vos sessions de navigation",
+  "version": "1.1.0",
+  "description": "Generate step-by-step tutorials from your browsing sessions",
   "permissions": [
     "activeTab",
     "tabs",
     "<all_urls>",
-    "webNavigation"
+    "webNavigation",
+    "downloads",
+    "storage"
   ],
   "background": {
     "scripts": ["background.js"]

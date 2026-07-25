@@ -37,7 +37,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     case 'START_RECORDING':
       state.recording = true;
-      state.title = message.title || 'Tutoriel sans titre';
+      state.title = message.title || 'Untitled tutorial';
       state.steps = [];
       state.startTime = Date.now();
       lastClickTime = 0;
@@ -142,7 +142,7 @@ browser.webNavigation.onCompleted.addListener(async (details) => {
     state.steps.push({
       id: uid(),
       action: 'navigation',
-      description: `Accéder à la page « ${tab.title || hostname(details.url)} »`,
+      description: `Navigate to page "${tab.title || hostname(details.url)}"`,
       screenshot,
       url: details.url,
       timestamp: Date.now()
@@ -163,7 +163,7 @@ async function captureInitialPage() {
     state.steps.push({
       id: uid(),
       action: 'navigation',
-      description: `Page de départ : « ${tab.title || hostname(tab.url)} »`,
+      description: `Starting page: "${tab.title || hostname(tab.url)}"`,
       screenshot,
       url: tab.url,
       timestamp: Date.now()
