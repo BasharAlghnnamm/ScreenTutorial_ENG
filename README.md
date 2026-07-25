@@ -1,6 +1,8 @@
-# ScreenTutorial (English Ver)
+# ScreenTutorial (English Ver) — v2.0
 
 Firefox extension that generates step-by-step tutorials from your browsing sessions. Click, navigate, fill out forms — every significant action is captured with an automatic screenshot.
+
+> **Forked from** [Emilien-Valain/ScreenTutorial](https://github.com/Emilien-Valain/ScreenTutorial) — all credit for the original project goes to Emilien Valain.
 
 ## Features
 
@@ -12,6 +14,13 @@ Firefox extension that generates step-by-step tutorials from your browsing sessi
 - **Standalone HTML export** (single file, openable in any browser)
 - **PDF export** via the browser's print dialog
 - **Configurable output folder** (saves to `Downloads/ScreenTutorial/` by default)
+- **All UI in English**
+
+## What's New in v2.0
+
+- English UI (translated from French)
+- Configurable output folder — all recordings and exports are saved to `Downloads/ScreenTutorial/`
+- Settings panel with folder name preference (persisted per-profile)
 
 ## Installation
 
