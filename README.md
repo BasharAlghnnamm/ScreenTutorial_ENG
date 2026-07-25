@@ -1,4 +1,4 @@
-# ScreenTutorial
+# ScreenTutorial (English Ver)
 
 Firefox extension that generates step-by-step tutorials from your browsing sessions. Click, navigate, fill out forms — every significant action is captured with an automatic screenshot.
 
@@ -19,7 +19,7 @@ Firefox extension that generates step-by-step tutorials from your browsing sessi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USER/ScreenTutorial.git
+   git clone https://github.com/BasharAlghnnamm/ScreenTutorial.git
    ```
 2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
 3. Click **"Load Temporary Add-on..."**
